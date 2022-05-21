@@ -1,0 +1,39 @@
+name: drupal-circle
+recipe: pantheon
+config:
+  framework: drupal8
+  composer_version: "2"
+  drush: "10.3.6"
+services:
+  database:
+    type: mariadb:10.4
+  appserver:
+    build:
+      - composer install -n
+    xdebug: false
+    config:
+      php: scripts/php.ini
+    overrides:
+      environment:
+        XDEBUG_MODE:
+  mailhog:
+    type: mailhog:v1.0.0
+    portforward: true
+    hogfrom:
+      - appserver
+tooling:
+  drush:
+    service: appserver
+    env:
+      DRUSH_OPTIONS_URI: "https://drupal-circle.lndo.site"
+      XDEBUG_SESSION: 1
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for nginx.
+    cmd: docker-php-ext-enable xdebug && pkill -o -USR2 php-fpm && echo "Enabling xdebug"
+    user: root
+  xdebug-off:
+    service: appserver
+    description: CUSTOM Disable xdebug for nginx.
+    cmd: rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && pkill -o -USR2 php-fpm && echo "Disabling xdebug"
+    user: root
