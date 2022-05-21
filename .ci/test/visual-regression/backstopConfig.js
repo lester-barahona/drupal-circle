@@ -13,19 +13,18 @@ let scenariosToTest = [];
 
 for (let [key, value] of Object.entries(pathsToTest)) {
     scenariosToTest.push({
-        label: key,
-        url: multidevURL + value,
-        referenceUrl: devURL + value,
-        hideSelectors: [],
-        removeSelectors: [],
-        selectorExpansion: true,
-        selectors: [
-            'document',
-        ],
-        readyEvent: null,
-        delay: 1500,
-        misMatchThreshold: 0.1
-    })
+      label: key,
+      url: multidevURL + value,
+      referenceUrl: devURL + value,
+      hideSelectors: [],
+      removeSelectors: [],
+      selectorExpansion: true,
+      selectors: ["document"],
+      readyEvent: null,
+      delay: 1500,
+      misMatchThreshold: 15.00,
+      requireSameDimensions: false
+    });
 }
 
 module.exports = {

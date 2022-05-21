@@ -1,0 +1,11 @@
+name: drupal-circle
+recipe: pantheon
+config:
+  site: drupal-circle
+  id: 8fe065f6-b86b-4ca7-97cb-ff4aff5955a9
+tooling:
+  drush:
+    service: appserver
+    env:
+      DRUSH_OPTIONS_URI: "https://drupal-circle.lndo.site"
+      XDEBUG_SESSION: 1
